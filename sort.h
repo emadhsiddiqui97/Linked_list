@@ -1,26 +1,43 @@
 #include<iostream>
+#include<fstream>
 using namespace std;
 
-void swap(int a, int b)
+fstream myfile;
+
+void swap(int *a, int *b)
 {
-    int temp = a;
-    a = b;
-    b = temp;
+    int &temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void simpleBubbleSort(linked_list *list)
+void printArray(int array[], int size)
 {
-    node *index = new node();
-    node *current = new node();
-    for(int i=0;i<list->length-1;i++)
+    myfile.open("data.txt", ios::in);
+    for(int i=0;i<size;i++)
     {
-        
-        for(int j=0;j<list->length-1;j++)
+        cout<<array[i]<<", ";
+        myfile<<array[i]<<endl;
+    }
+    myfile.close();
+}
+
+void simpleBubbleSort(int array[], int size)
+{
+    //int i=0;
+    // myfile.open("data.txt", ios::in);
+    // while(myfile.eof())
+    // {
+    //     myfile>>array[i];
+    //     i++;
+    // }
+    // myfile.close();
+    for(int i=0;i<size-1;i++)
+    {
+        for(int j=0;j<size-1;j++)
         {
-            if(list->data > list->next->data)
-            {
-                swap(current, next);
-            }
+            if(array[j] > array[j+1])
+                {swap(&array[j], &array[j+1]);}
         }
     }
 }
@@ -49,3 +66,6 @@ void simpleBubbleSort(linked_list *list)
 // 					}
 // 				}
 // 			}
+
+
+

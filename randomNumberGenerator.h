@@ -6,25 +6,43 @@
 using namespace std;
 
 
+void loadingBar(int iteration, int total)
+{
+    int percentage = (iteration/total)*100;
+    cout<<"\r";
+    cout<<"Progress "<<percentage<<"%: ";
+    for(int j=0;j<percentage;j++)
+        {cout<<"\u275A";}
+}
+
 int randomNumber()
 {
     srand(time(NULL));
-    int num = rand() % 100 + 1;
+    int num = rand() % 60 + 1;
     return num;
 }
 void generateRandomNumbers()
 {
     fstream myfile;
-    int randNum[100];
+    int randNum[60];
     bool unique = true;
     int num = 0, temp = 0;
-    string loading = "[          ]";
-    for(int i=0;i<100;i++)
+    int percentage = 0;
+    //string loading = "[          ]";
+    for(int i=0;i<60;i++)
     {
+        percentage = ((i+1)*100)/60;
         if(i==0)
         {
             randNum[i] = randomNumber();
-            cout<<"\r\nProgress: "<<loading<<"\t"<<i+1<<"%";
+            //cout<<"\r\nProgress: "<<loading<<"\t"<<i+1<<"%";
+                cout<<"\r";
+                cout<<"Progress: ";
+                for(int j=0;j<percentage;j++)
+                {
+                    cout<<"\u275A";
+                }
+            //loadingBar(i+1, 100);
         }
         else
         {
@@ -50,18 +68,24 @@ void generateRandomNumbers()
             if(unique == true)
             {
                 randNum[i] = num;
-                cout<<"\r";
-                cout<<"Progress: "<<loading<<"\t"<<i+1<<"%";
+                 cout<<"\r";
+                 cout<<"Progress "<<percentage<<"%: ";
+                 for(int j=0;j<percentage;j++)
+                 {
+                     cout<<"\u275A";
+                 }
+                //cout<<"\t"<<percentage<<"%";
+                //loadingBar(i+1, 100);
             }
         }
-        if(i%10 == 0)
-        {
-            loading[(i/10)+1] = '#';
-        }
+        // if(i%10 == 0)
+        // {
+        //     loading[(i/10)+1] = '#';
+        // }
     }
     cout<<endl;
     myfile.open("data.txt", ios::out);
-    for(int i=0;i<100;i++)
+    for(int i=0;i<60;i++)
     {myfile<<randNum[i]<<endl;}
     myfile.close();
 }
